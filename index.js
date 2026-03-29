@@ -8,9 +8,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-/* ========================= */
-/* CONFIGURATION */
-/* ========================= */
+/* CONFIG */
 
 const SMTP_EMAIL = "goru78.nex@gmail.com";
 const SMTP_PASSWORD = "mjtlqbdyrxsakuhn";
@@ -18,29 +16,20 @@ const SMTP_PASSWORD = "mjtlqbdyrxsakuhn";
 const APP_NAME = "Appnetick";
 const EMAIL_SUBJECT = "Appnetick OTP Verification";
 
-
-/* ========================= */
-/* ROOT TEST ROUTE */
-/* ========================= */
+/* ROOT */
 
 app.get("/", (req, res) => {
-res.send("SMTP OTP Server Running");
+res.send("SMTP Server Running");
 });
 
+/* OTP */
 
-/* ========================= */
-/* SEND OTP */
-/* ========================= */
+app.get("/send-otp", async (req, res) => {
 
-app.all("/send-otp", async (req, res) => {
-
-const email = req.body.email || req.query.email;
+const email = req.query.email;
 
 if(!email){
-return res.json({
-status:"error",
-msg:"Email missing"
-});
+return res.json({status:"error",msg:"email missing"});
 }
 
 const otp = Math.floor(100000 + Math.random() * 900000);
@@ -56,26 +45,12 @@ pass: SMTP_PASSWORD
 const mailOptions = {
 
 from: `${APP_NAME} <${SMTP_EMAIL}>`,
-
 to: email,
-
 subject: EMAIL_SUBJECT,
 
-html: `
-
-<div style="font-family:Arial;padding:20px">
-
-<h2>${APP_NAME}</h2>
-
-<p>Your OTP Code:</p>
-
-<h1 style="font-size:35px;color:#4A90E2">${otp}</h1>
-
-<p>This OTP is valid for 5 minutes</p>
-
-</div>
-
-`
+html: `<h2>${APP_NAME}</h2>
+<h1>${otp}</h1>
+<p>This OTP valid for 5 minutes</p>`
 
 };
 
@@ -99,13 +74,10 @@ msg: e.toString()
 
 });
 
-
-/* ========================= */
-/* SERVER START */
-/* ========================= */
+/* START */
 
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-console.log("SMTP Server Running");
+console.log("Server running");
 });
