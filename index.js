@@ -42,21 +42,19 @@ pass: SMTP_PASSWORD
 });
 
 const mailOptions = {
-
 from: `${APP_NAME} <${SMTP_EMAIL}>`,
 to: email,
-subject: "OTP Verification",
+subject: "Appnetick OTP",
 
 html: `
 <h2>${APP_NAME}</h2>
-<p>Your OTP:</p>
+<p>Your OTP is:</p>
 <h1>${otp}</h1>
 <p>This OTP valid for 5 minutes</p>
 `
-
 };
 
-try{
+try {
 
 await transporter.sendMail(mailOptions);
 
@@ -65,11 +63,11 @@ status:"success",
 otp: otp
 });
 
-}catch(e){
+} catch(e){
 
 res.json({
 status:"error",
-msg:e.toString()
+msg: e.toString()
 });
 
 }
@@ -79,5 +77,5 @@ msg:e.toString()
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-console.log("Server running");
+console.log("Server Running");
 });
