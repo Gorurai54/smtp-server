@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 
 app.get("/", (req, res) => {
-  res.send("Server Running");
+  res.send("Server Running OK");
 });
 
 app.get("/send-otp", (req, res) => {
@@ -13,5 +13,5 @@ app.get("/send-otp", (req, res) => {
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log("Server running");
+  console.log("Server started");
 });
